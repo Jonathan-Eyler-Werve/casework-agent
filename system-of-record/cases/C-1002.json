@@ -1,0 +1,12 @@
+{
+  "case_id": "C-1002",
+  "applicant_id": "A-1002",
+  "caseworker_id": "CW-7",
+  "program": "SNAP",
+  "status": "recert_due",
+  "recert_due": "2026-06-15",
+  "planned_meeting": {"datetime": "2026-05-28T14:00:00", "channel": "phone", "goal": "Complete SNAP recertification intake and resolve H.R. 1 work-requirement verification before the 2026-06-15 deadline."},
+  "documents": [{"type": "id", "status": "on_file"}, {"type": "proof_of_income", "status": "expired"}],
+  "flags": ["work_hours_below_threshold"],
+  "last_action": "2026-05-20 recert-due notice sent"
+}

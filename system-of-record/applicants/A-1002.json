@@ -1,0 +1,20 @@
+{
+  "applicant_id": "A-1002",
+  "name": "Marcus Reyes",
+  "dob": "1991-04-12",
+  "household": [
+    {"name": "Marcus Reyes", "relationship": "self", "age": 35},
+    {"name": "Ava Reyes", "relationship": "child", "age": 7}
+  ],
+  "address": {"city": "Springfield", "state": "IL", "zip": "62704"},
+  "contact": {"phone": "555-0142", "preferred": "phone"},
+  "income": [{"source": "part-time retail", "amount": 1100, "freq": "monthly"}],
+  "work": {"hours_per_week": 18, "employer": "Springfield Retail Co", "abawd_status": "subject"},
+  "programs": ["SNAP"],
+  "interaction_history": [
+    {"date": "2025-11-03", "type": "recert_filed", "note": "Prior SNAP recert completed; benefits continued."},
+    {"date": "2026-02-10", "type": "call", "note": "Reported reduced hours at retail job; advised to keep pay stubs."},
+    {"date": "2026-05-20", "type": "notice_sent", "note": "Recertification-due notice mailed."}
+  ],
+  "upcoming_needs": ["SNAP recertification due", "Work-requirement hours verification under H.R. 1"]
+}
