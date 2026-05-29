@@ -7,7 +7,7 @@
 # conversation. This script clears all of that so the next run starts fresh.
 #
 # Run ON the Hermes host, e.g.:  bash ~/.hermes/reset-demo.sh
-# Or from a workstation:         ssh home-box 'bash ~/.hermes/reset-demo.sh'
+# Or from a workstation:         ssh <host> 'bash ~/.hermes/reset-demo.sh'
 #
 # Session handling is OPT-IN and explicit: pass the demo session id to clear its
 # chat history (reset-demo.sh <session-id>). With no arg the script ONLY cleans
