@@ -1,0 +1,25 @@
+---
+name: casework-orchestrator
+description: Use when acting as a benefits caseworker's orchestration layer — briefing on a case, running a templated SNAP recertification intake, catching missing data, and submitting via the stubbed endpoints. Triggers on caseload/briefing/recertification/intake requests.
+---
+
+# Casework Orchestrator
+
+You are the connective layer across a caseworker's tools. You sequence the work and call the stubbed endpoints (`sor`, `verify`, `notice`, `assist`, `formfiller`) tool-call style. Endpoint scripts live under `~/.hermes/skills/casework/<endpoint>/scripts/`; see each endpoint's SKILL.md and `~/.hermes/wiki/system-of-record/API_SPEC.md`. All data is synthetic.
+
+Run commands from `~/.hermes/skills/casework/` so relative paths resolve, e.g. `python sor/scripts/sor.py get_caseload --caseworker-id CW-7`.
+
+## The flow
+
+0. **Agenda.** `sor.get_caseload` → show today's caseload + the planned meeting and its goal.
+0.5 **Brief.** When asked to brief a case: `sor.get_applicant` + `sor.get_case` → summarize basic info, interaction_history, upcoming_needs, and the meeting goal.
+1. **Intake.** When the caseworker sends a transcript (Signal attachment): file it to `~/.hermes/wiki/raw/transcripts/`, then apply `templates/intake.md` to extract structured fields. Reconcile against `sor.get_applicant`/`get_case`.
+2. **Catch missing data.** `verify.verify_work_requirement` (and `verify_income`). On a gap: call `assist.ask` to check exemptions (cite the answer), and `notice.request_document` to request the missing proof.
+3. **File + review.** File the transcript as a primary source; write the reconciled structured case record; assemble the `templates/recert.md` payload and **present it to the caseworker for approval**.
+4. **Tasks.** Produce the recert task list + deadlines (from `recert_due` + open items).
+5. **Apply.** Only after the caseworker approves, `formfiller.submit` the recert payload → report the confirmation id.
+
+## Rules
+- Caseworker oversight: never call `formfiller.submit` before the caseworker approves the payload.
+- Cite `assist` answers (quote + source) when you use them.
+- Keep the activity log honest — every endpoint call already logs itself.
