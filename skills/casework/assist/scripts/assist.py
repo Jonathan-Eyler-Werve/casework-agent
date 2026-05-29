@@ -7,7 +7,11 @@ SRC = "assist/sources/hr1-snap-work-req.md"
 
 # Canned, citation-backed answers keyed by topic (deterministic for the demo).
 KB = [
-    {"keywords": ["exempt", "exemption", "child", "dependent", "work requirement"],
+    {"keywords": ["exempt", "exemption", "exemptions", "child", "children", "dependent", "dependents",
+                  "work", "requirement", "requirements", "abawd", "able-bodied", "hours", "snap",
+                  "recert", "recertification", "eligible", "eligibility", "qualify", "qualifies",
+                  "caretaker", "caring", "care", "waive", "waiver", "comply", "compliance",
+                  "h.r. 1", "hr1", "deadline", "benefit", "verify", "verification", "income"],
      "answer": ("A SNAP applicant is exempt from the H.R. 1 ABAWD work requirement if they are responsible "
                 "for a dependent child under 18 in the household. Caring for an incapacitated household member, "
                 "or being unable to work, also qualifies. Unverified hours don't count — request documentation "
