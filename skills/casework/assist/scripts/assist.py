@@ -18,19 +18,19 @@ KB = [
      ]},
 ]
 
-def ask(a):
-    q = a.question.lower()
-    best = max(KB, key=lambda entry: sum(k in q for k in entry["keywords"]))
-    if sum(k in q for k in best["keywords"]) == 0:
+def ask(args):
+    question = args.question.lower()
+    best = max(KB, key=lambda entry: sum(k in question for k in entry["keywords"]))
+    if sum(k in question for k in best["keywords"]) == 0:
         cio.append_log({"endpoint": "assist", "op": "ask", "status": "ok", "matched": False})
         return cio.emit("ok", {"answer": "I don't have a vetted source for that question.", "confidence": "low"}, citations=[])
     cio.append_log({"endpoint": "assist", "op": "ask", "status": "ok", "matched": True})
     return cio.emit("ok", {"answer": best["answer"], "confidence": "high"}, citations=best["citations"])
 
 def main():
-    p = argparse.ArgumentParser(); sub = p.add_subparsers(dest="op", required=True)
-    s = sub.add_parser("ask"); s.add_argument("--question", required=True); s.set_defaults(fn=ask)
-    a = p.parse_args(); a.fn(a)
+    parser = argparse.ArgumentParser(); sub = parser.add_subparsers(dest="op", required=True)
+    cmd = sub.add_parser("ask"); cmd.add_argument("--question", required=True); cmd.set_defaults(fn=ask)
+    args = parser.parse_args(); args.fn(args)
 
 if __name__ == "__main__":
     main()

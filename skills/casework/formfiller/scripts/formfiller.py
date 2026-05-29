@@ -9,27 +9,27 @@ STEPS = ["Authenticating to benefits portal",
          "Reviewing for completeness",
          "Submitting"]
 
-def submit(a):
-    payload = json.loads(pathlib.Path(a.payload_file).read_text())
-    delay = 0 if a.fast else 0.8
+def submit(args):
+    payload = json.loads(pathlib.Path(args.payload_file).read_text())
+    delay = 0 if args.fast else 0.8
     for step in STEPS:
         print(f"[formfiller] {step}…", file=sys.stderr, flush=True)
         time.sleep(delay)
     confirmation_id = "SNAP-REC-" + str(random.randint(1000, 9999))
     submitted_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    data = {"confirmation_id": confirmation_id, "submitted_at": submitted_at, "form": a.form, "case_id": a.case_id}
-    cio.append_log({"endpoint": "formfiller", "op": "submit", "case_id": a.case_id,
+    data = {"confirmation_id": confirmation_id, "submitted_at": submitted_at, "form": args.form, "case_id": args.case_id}
+    cio.append_log({"endpoint": "formfiller", "op": "submit", "case_id": args.case_id,
                     "status": "success", "ref": f"confirmation:{confirmation_id}"})
-    print(json.dumps({"status": "success", "data": data, "log_ref": confirmation_id}, indent=2))
+    cio.emit("success", data, log_ref=confirmation_id)
     return data
 
 def main():
-    p = argparse.ArgumentParser(); sub = p.add_subparsers(dest="op", required=True)
-    s = sub.add_parser("submit")
-    s.add_argument("--form", required=True); s.add_argument("--case-id", required=True)
-    s.add_argument("--payload-file", required=True); s.add_argument("--fast", action="store_true", help="skip simulated delay (tests)")
-    s.set_defaults(fn=submit)
-    a = p.parse_args(); a.fn(a)
+    parser = argparse.ArgumentParser(); sub = parser.add_subparsers(dest="op", required=True)
+    cmd = sub.add_parser("submit")
+    cmd.add_argument("--form", required=True); cmd.add_argument("--case-id", required=True)
+    cmd.add_argument("--payload-file", required=True); cmd.add_argument("--fast", action="store_true", help="skip simulated delay (tests)")
+    cmd.set_defaults(fn=submit)
+    args = parser.parse_args(); args.fn(args)
 
 if __name__ == "__main__":
     main()
