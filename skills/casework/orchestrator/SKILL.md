@@ -13,7 +13,7 @@ Run commands from `~/.hermes/skills/casework/` so relative paths resolve, e.g. `
 
 0. **Agenda.** `sor.get_caseload` → show today's caseload + the planned meeting and its goal.
 0.5 **Brief.** When asked to brief a case: `sor.get_applicant` + `sor.get_case` → summarize basic info, interaction_history, upcoming_needs, and the meeting goal.
-1. **Intake.** When the caseworker sends a transcript (Signal attachment): file it to `~/.hermes/wiki/raw/transcripts/`, then apply `templates/intake.md` to extract structured fields. Reconcile against `sor.get_applicant`/`get_case`.
+1. **Intake.** When the caseworker says they've sent a transcript (or a message arrives with an attachment / empty text), retrieve the file: messaging attachments are downloaded to `~/.local/share/signal-cli/attachments/`. Read the most-recently-modified file there — `ls -t ~/.local/share/signal-cli/attachments/ | head -1` then read that file (extension-less ids are fine; the newest one is the just-sent file). Copy its contents into `~/.hermes/wiki/raw/transcripts/<descriptive-name>.md`, then apply `templates/intake.md` to extract structured fields. Reconcile against `sor.get_applicant`/`get_case`. If no recent attachment is found, ask the caseworker to paste the transcript text.
 2. **Catch missing data.** `verify.verify_work_requirement` (and `verify_income`). On a gap: call `assist.ask` to check exemptions (cite the answer), and `notice.request_document` to request the missing proof.
 3. **File + review.** File the transcript as a primary source; write the reconciled structured case record; assemble the `templates/recert.md` payload and **present it to the caseworker for approval**.
 4. **Tasks.** Produce the recert task list + deadlines (from `recert_due` + open items).
