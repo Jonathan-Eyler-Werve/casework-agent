@@ -22,9 +22,9 @@ The point tools are stubbed behind an imagined API:
 - `system-of-record/` — the stubbed external case system: JSON records + an append-only `activity-log.jsonl`; `API_SPEC.md` documents the imagined API.
 - Reads resolve to JSON files; every call appends to the activity log; nothing is destructively overwritten.
 
-## Run it locally
+## Run the endpoint stubs
 
-No dependencies beyond Python 3:
+The five endpoint scripts are standalone and **stdlib-only Python 3** — call them directly, no install needed:
 
 ```bash
 WIKI_PATH=$PWD python3 skills/casework/sor/scripts/sor.py get_caseload --caseworker-id CW-7
@@ -32,7 +32,9 @@ WIKI_PATH=$PWD python3 skills/casework/verify/scripts/verify.py verify_work_requ
 WIKI_PATH=$PWD python3 skills/casework/assist/scripts/assist.py ask --question "Which H.R. 1 exemptions apply?"
 ```
 
-Tests: `cd skills/casework && python3 -m pytest tests/` (8 passing). A full-flow smoke exercises every endpoint end-to-end.
+Tests need **pytest**: `cd skills/casework && python3 -m pytest tests/` (8 passing). A full-flow smoke exercises every endpoint end-to-end.
+
+> The scripts above are stdlib-only because they're the stubbed *endpoints* the agent calls. The **full demo** — the agent orchestrating them from chat — runs on the Hermes agent harness (Node-based gateway + signal-cli) on the Pi/Tailscale/Docker setup below; that's the part with real dependencies.
 
 ## The demo harness
 
