@@ -1,6 +1,6 @@
 ---
 name: casework-orchestrator
-description: Use when acting as a benefits caseworker's orchestration layer — briefing on a case, running a templated SNAP recertification intake, catching missing data, and submitting via the stubbed endpoints. Triggers on caseload/briefing/recertification/intake requests.
+description: THE caseworker orchestration layer — use whenever the user acts as a benefits caseworker. Triggers on "what's on my agenda/caseload today", "brief me on <case or applicant>" (e.g. by name or case id like C-1002), receiving or filing an intake call transcript, checking SNAP work-requirement / H.R. 1 verification, requesting missing documents, building or reviewing a recertification, or submitting a recert form. Coordinates the sor/verify/notice/assist/formfiller endpoints.
 ---
 
 # Casework Orchestrator
