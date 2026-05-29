@@ -21,7 +21,25 @@ Run commands from `~/.hermes/skills/casework/` so relative paths resolve, e.g. `
 4. **Tasks.** Produce the recert task list + deadlines (from `recert_due` + open items).
 5. **Apply.** Only after the caseworker approves, `formfiller.submit` the recert payload → report the confirmation id.
 
+## Verbs (the command vocabulary)
+
+Drive interaction through these action verbs (the persona defines the command-console behavior + the `AVAILABLE ACTIONS` menu). Each verb maps to a step above:
+
+| Verb | Action |
+|---|---|
+| AGENDA | `sor.get_caseload` → caseload + planned meetings/deadlines (step 0) |
+| BRIEFING | `sor.get_case` + `get_applicant` → brief the active case (step 0.5) |
+| INTAKE | retrieve + file the sent transcript, extract via `templates/intake.md` (step 1) |
+| VERIFY | `verify.verify_work_requirement` + `verify_income` (step 2) |
+| POLICY | `assist.ask` → cited policy answer (step 2) |
+| RECORD REQUEST | `notice.request_document` for a specific missing doc (step 2) |
+| REVIEW | assemble + present the `templates/recert.md` payload for approval (step 3) |
+| TASKS | outstanding items + deadlines from `recert_due` + open items (step 4) |
+| SUBMIT | `formfiller.submit` the approved recert (step 5) |
+| HELP | re-show the `AVAILABLE ACTIONS` menu |
+
 ## Rules
+- Drive the conversation through the verbs; when awaiting the user's next command, end the message with the context-aware `AVAILABLE ACTIONS` menu (see persona). Don't show the menu mid-action.
 - Every message to the user starts with the literal header `CASEWORK AGENT: ` (demo legibility).
 - Caseworker oversight: never call `formfiller.submit` before the caseworker approves the payload.
 - Cite `assist` answers (quote + source) when you use them.
