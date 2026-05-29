@@ -61,9 +61,25 @@ done
 : > "$SOR/activity-log.jsonl"
 rm -f "$SOR"/notices/N-*.json
 
-echo "Wiki + SoR reset: log/index pristine, raw/case artifacts cleared, activity log + notices empty."
+# 4. Stamp each case's planned-meeting date to today (keep the time-of-day) so the
+#    agenda always reads as a current meeting, not "yesterday".
+python3 - "$SOR" <<'PY'
+import datetime, json, pathlib, sys
+sor = pathlib.Path(sys.argv[1])
+today = datetime.date.today().isoformat()
+for case_file in sorted((sor / "cases").glob("*.json")):
+    data = json.loads(case_file.read_text())
+    meeting = data.get("planned_meeting")
+    if isinstance(meeting, dict) and meeting.get("datetime"):
+        time_part = meeting["datetime"].split("T", 1)[1] if "T" in meeting["datetime"] else "14:00:00"
+        meeting["datetime"] = f"{today}T{time_part}"
+        case_file.write_text(json.dumps(data, indent=2) + "\n")
+        print(f"  {case_file.name}: planned_meeting -> {meeting['datetime']}")
+PY
 
-# 4. Clear the demo conversation — only when an explicit session id is given.
+echo "Wiki + SoR reset: log/index pristine, raw/case artifacts cleared, activity log + notices empty, meeting date set to today."
+
+# 5. Clear the demo conversation — only when an explicit session id is given.
 #    SAFETY: never auto-deletes. "Most recent Signal session" could be a real
 #    conversation, so the caller must name the session to drop.
 if [ -n "${1:-}" ]; then
