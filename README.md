@@ -4,7 +4,7 @@ A **coordination layer** for benefits caseworkers — one assistant that sits ac
 
 **▶ Demo (2 min):** https://p192.p3.n0.cdn.zight.com/items/P8uoBN49/01dd81cd-7021-4744-9d01-6c41c52a652b.mp4?v=35d7dc93082c348630f4ef9f7c7f157f
 
-Take-home prototype for the Code for America Director of Product assessment. Everything here is **synthetic** — no real applicant data, and the integrations are stubbed so the orchestration is what's on display.
+This is proof of concept only, but applied to a real concern about tool proliferation. Everything here is **synthetic** — no real applicant data, and the integrations are stubbed so the orchestration is what's on display.
 
 ## What it does
 
